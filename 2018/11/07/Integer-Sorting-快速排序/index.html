@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="本文介绍快速排序的Java实现，时间复杂度平均为$O(logn)$，最坏情况为$O(n^2)$. Quick Sort - 快速排序快速排序是二十世纪十大算法之一。相比于归并排序，快速排序的时间复杂度并没有提升。不过，归并排序的空间复杂度为$O(n)$，而快速排序是in-place的排序，空间复杂度仅为$O(1)$。快速排序的核心思想是先让数组整体有序，再局部有序。其实现过程是，在数组中选取一个p">
+<meta name="description" content="本文介绍快速排序的Java实现，时间复杂度平均为$O(logn)$，最坏情况为$O(n^2)$.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Integer Sorting - 快速排序">
 <meta property="og:url" content="http://fanshehu.github.io/2018/11/07/Integer-Sorting-快速排序/index.html">
 <meta property="og:site_name" content="fanshehu">
-<meta property="og:description" content="本文介绍快速排序的Java实现，时间复杂度平均为$O(logn)$，最坏情况为$O(n^2)$. Quick Sort - 快速排序快速排序是二十世纪十大算法之一。相比于归并排序，快速排序的时间复杂度并没有提升。不过，归并排序的空间复杂度为$O(n)$，而快速排序是in-place的排序，空间复杂度仅为$O(1)$。快速排序的核心思想是先让数组整体有序，再局部有序。其实现过程是，在数组中选取一个p">
+<meta property="og:description" content="本文介绍快速排序的Java实现，时间复杂度平均为$O(logn)$，最坏情况为$O(n^2)$.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-07T20:53:12.731Z">
+<meta property="og:updated_time" content="2018-11-21T20:19:24.470Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Integer Sorting - 快速排序">
-<meta name="twitter:description" content="本文介绍快速排序的Java实现，时间复杂度平均为$O(logn)$，最坏情况为$O(n^2)$. Quick Sort - 快速排序快速排序是二十世纪十大算法之一。相比于归并排序，快速排序的时间复杂度并没有提升。不过，归并排序的空间复杂度为$O(n)$，而快速排序是in-place的排序，空间复杂度仅为$O(1)$。快速排序的核心思想是先让数组整体有序，再局部有序。其实现过程是，在数组中选取一个p">
+<meta name="twitter:description" content="本文介绍快速排序的Java实现，时间复杂度平均为$O(logn)$，最坏情况为$O(n^2)$.">
 
 
 
@@ -315,6 +315,25 @@
           
 
           
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  544
+                </span>
+              
+
+              
+
+              
+            </div>
+          
 
           
 
@@ -332,6 +351,7 @@
 
       
         <p>本文介绍快速排序的Java实现，时间复杂度平均为$O(logn)$，最坏情况为$O(n^2)$.</p>
+<a id="more"></a>
 <h2 id="Quick-Sort-快速排序"><a href="#Quick-Sort-快速排序" class="headerlink" title="Quick Sort - 快速排序"></a>Quick Sort - 快速排序</h2><p>快速排序是二十世纪十大算法之一。<br>相比于归并排序，快速排序的时间复杂度并没有提升。不过，归并排序的空间复杂度为$O(n)$，而快速排序是in-place的排序，空间复杂度仅为$O(1)$。<br>快速排序的核心思想是先让数组整体有序，再局部有序。其实现过程是，在数组中选取一个pivot，把数组中比pivot大的放在一边，把比pivot小的放在另一边。然后重复这个过程，直到数组全部被排好序。  </p>
 <h3 id="Random-Pivot"><a href="#Random-Pivot" class="headerlink" title="Random Pivot"></a>Random Pivot</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> A: an integer array</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>: nothing</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> Random rand;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sortIntegers2</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</span><br><span class="line">        rand = <span class="keyword">new</span> Random();</span><br><span class="line">        quickSort(A, <span class="number">0</span>, A.length - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(<span class="keyword">int</span>[] A, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (l &gt;= r) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> i = l;</span><br><span class="line">        <span class="keyword">int</span> j = r;</span><br><span class="line">        <span class="keyword">int</span> index = rand.nextInt(r - l + <span class="number">1</span>) + l;</span><br><span class="line">        <span class="keyword">int</span> pivot = A[index];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (i &lt;= j) &#123;</span><br><span class="line">            <span class="keyword">while</span> (i &lt;= j &amp;&amp; A[i] &lt; pivot) &#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> (i &lt;= j &amp;&amp; A[j] &gt; pivot) &#123;</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (i &lt;= j) &#123;</span><br><span class="line">                <span class="keyword">int</span> tmp = A[i];</span><br><span class="line">                A[i] = A[j];</span><br><span class="line">                A[j] = tmp;</span><br><span class="line">                i++;</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        quickSort(A, l, j);</span><br><span class="line">        quickSort(A, i, r);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="Left-Point-Pivot"><a href="#Left-Point-Pivot" class="headerlink" title="Left Point Pivot"></a>Left Point Pivot</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> A: an integer array</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>: nothing</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sortIntegers2</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</span><br><span class="line">        quickSort(A, <span class="number">0</span>, A.length - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(<span class="keyword">int</span>[] A, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (l &gt;= r) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> loc = r + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> pivot = A[l];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = r; i &gt; l; i--) &#123;</span><br><span class="line">            <span class="keyword">if</span> (A[i] &gt;= pivot) &#123;</span><br><span class="line">                loc--;</span><br><span class="line">                swap(A, i, loc);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        loc--;</span><br><span class="line">        swap(A, l, loc);</span><br><span class="line">        </span><br><span class="line">        quickSort(A, l, loc - <span class="number">1</span>);</span><br><span class="line">        quickSort(A, loc + <span class="number">1</span>, r);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[]A, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = A[i];</span><br><span class="line">        A[i] = A[j];</span><br><span class="line">        A[j] = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -536,7 +556,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -544,6 +567,13 @@
 
   
 </div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+</div>
+
+<span class="post-meta-divider">|</span>
 
 
   <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>

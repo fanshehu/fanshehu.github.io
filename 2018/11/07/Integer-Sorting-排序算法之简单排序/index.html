@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="本文介绍三种简单排序的Java实现，时间复杂度皆为$O(n^2)$. Selection Sort - 选择排序每有一个新的数字，插入到已排好序列中该在的位置12345678910111213141516171819202122public class Solution &amp;#123;    /**     * @param A: an integer array     * @return: no">
+<meta name="description" content="本文介绍三种简单排序的Java实现，时间复杂度皆为$O(n^2)$.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Integer Sorting - 排序算法之简单排序">
 <meta property="og:url" content="http://fanshehu.github.io/2018/11/07/Integer-Sorting-排序算法之简单排序/index.html">
 <meta property="og:site_name" content="fanshehu">
-<meta property="og:description" content="本文介绍三种简单排序的Java实现，时间复杂度皆为$O(n^2)$. Selection Sort - 选择排序每有一个新的数字，插入到已排好序列中该在的位置12345678910111213141516171819202122public class Solution &amp;#123;    /**     * @param A: an integer array     * @return: no">
+<meta property="og:description" content="本文介绍三种简单排序的Java实现，时间复杂度皆为$O(n^2)$.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-07T20:53:13.510Z">
+<meta property="og:updated_time" content="2018-11-21T20:19:33.838Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Integer Sorting - 排序算法之简单排序">
-<meta name="twitter:description" content="本文介绍三种简单排序的Java实现，时间复杂度皆为$O(n^2)$. Selection Sort - 选择排序每有一个新的数字，插入到已排好序列中该在的位置12345678910111213141516171819202122public class Solution &amp;#123;    /**     * @param A: an integer array     * @return: no">
+<meta name="twitter:description" content="本文介绍三种简单排序的Java实现，时间复杂度皆为$O(n^2)$.">
 
 
 
@@ -315,6 +315,25 @@
           
 
           
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  315
+                </span>
+              
+
+              
+
+              
+            </div>
+          
 
           
 
@@ -332,6 +351,7 @@
 
       
         <p>本文介绍三种简单排序的Java实现，时间复杂度皆为$O(n^2)$.</p>
+<a id="more"></a> 
 <h2 id="Selection-Sort-选择排序"><a href="#Selection-Sort-选择排序" class="headerlink" title="Selection Sort - 选择排序"></a>Selection Sort - 选择排序</h2><p>每有一个新的数字，插入到已排好序列中该在的位置<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> A: an integer array</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>: nothing</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sortIntegers</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// write your code here</span></span><br><span class="line">        <span class="keyword">int</span> n = A.length;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> minIndex = i;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (A[j] &lt; A[minIndex]) &#123;</span><br><span class="line">                    minIndex = j;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">int</span> tmp = A[i];</span><br><span class="line">            A[i] = A[minIndex];</span><br><span class="line">            A[minIndex] = tmp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2 id="Bubble-Sort-冒泡排序"><a href="#Bubble-Sort-冒泡排序" class="headerlink" title="Bubble Sort - 冒泡排序"></a>Bubble Sort - 冒泡排序</h2><p>从左到右，顺序相反的就交换，只到所有顺序一致<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> A: an integer array</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>: nothing</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sortIntegers</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// write your code here</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">boolean</span> exchange = <span class="keyword">false</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; A.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (A[i] &gt; A[i + <span class="number">1</span>]) &#123;</span><br><span class="line">                    <span class="keyword">int</span> tmp = A[i];</span><br><span class="line">                    A[i] = A[i + <span class="number">1</span>];</span><br><span class="line">                    A[i + <span class="number">1</span>] = tmp;</span><br><span class="line">                    exchange = <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!exchange) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2 id="Insertion-Sort-插入排序"><a href="#Insertion-Sort-插入排序" class="headerlink" title="Insertion Sort - 插入排序"></a>Insertion Sort - 插入排序</h2><p>每有一个新的数字，插入到已排好序列中该在的位置<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> A: an integer array</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>: nothing</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sortIntegers</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; A.length; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> k = i - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">int</span> tmp = A[i];</span><br><span class="line">            <span class="keyword">while</span> (k &gt;= <span class="number">0</span> &amp;&amp; A[k] &gt; tmp) &#123;</span><br><span class="line">                A[k + <span class="number">1</span>] = A[k];</span><br><span class="line">                k--;</span><br><span class="line">            &#125;</span><br><span class="line">            A[k + <span class="number">1</span>] = tmp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -539,7 +559,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -547,6 +570,13 @@
 
   
 </div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+</div>
+
+<span class="post-meta-divider">|</span>
 
 
   <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
