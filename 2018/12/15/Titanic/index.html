@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近开始学习机器学习的相关知识，学习需要实践，于是就打算在kaggle上做个项目。第一个kaggle项目就是Titanic，kaggle最简单，也是最经典的项目。我按照kaggle提供的教学文章做了一遍，断断续续得做了两个星期，但是学到了很多知识，感觉最重要的，是熟悉了这种数据竞赛的流程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kaggle入门之Titanic幸存者分析">
+<meta property="og:url" content="http://fanshehu.github.io/2018/12/15/Titanic/index.html">
+<meta property="og:site_name" content="fanshehu">
+<meta property="og:description" content="最近开始学习机器学习的相关知识，学习需要实践，于是就打算在kaggle上做个项目。第一个kaggle项目就是Titanic，kaggle最简单，也是最经典的项目。我按照kaggle提供的教学文章做了一遍，断断续续得做了两个星期，但是学到了很多知识，感觉最重要的，是熟悉了这种数据竞赛的流程。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-20T22:03:37.447Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kaggle入门之Titanic幸存者分析">
+<meta name="twitter:description" content="最近开始学习机器学习的相关知识，学习需要实践，于是就打算在kaggle上做个项目。第一个kaggle项目就是Titanic，kaggle最简单，也是最经典的项目。我按照kaggle提供的教学文章做了一遍，断断续续得做了两个星期，但是学到了很多知识，感觉最重要的，是熟悉了这种数据竞赛的流程。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fanshehu.github.io/2018/12/15/Titanic/">
+
+
+
+
+
+  <title>Kaggle入门之Titanic幸存者分析 | fanshehu</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fanshehu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fanshehu.github.io/2018/12/15/Titanic/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fanshehu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/portrait.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fanshehu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kaggle入门之Titanic幸存者分析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-15T21:34:11-05:00">
+                2018-12-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.4k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近开始学习机器学习的相关知识，学习需要实践，于是就打算在kaggle上做个项目。第一个kaggle项目就是Titanic，kaggle最简单，也是最经典的项目。我按照kaggle提供的教学文章做了一遍，断断续续得做了两个星期，但是学到了很多知识，感觉最重要的，是熟悉了这种数据竞赛的流程。</p>
+<a id="more"></a> 
+<p>项目地址：<a href="https://www.kaggle.com/c/titanic" target="_blank" rel="noopener">Titanic: Machine Learning from Disaster</a><br>参考文章：<a href="https://www.kaggle.com/startupsci/titanic-data-science-solutions" target="_blank" rel="noopener">Titanic Data Science Solution</a></p>
+<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>已有的数据是Titanic号的乘客资料。要求通过分析这份资料，通过机器学习的方法，预测乘客的存活情况。</p>
+<h3 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数据整理、分析</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> random <span class="keyword">as</span> rnd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可视化</span></span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line"><span class="comment"># 机器学习模型</span></span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> SVC, LinearSVC</span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.naive_bayes <span class="keyword">import</span> GaussianNB</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> Perceptron</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> SGDClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeClassifier</span><br></pre></td></tr></table></figure>
+<h2 id="2-获得数据"><a href="#2-获得数据" class="headerlink" title="2. 获得数据"></a>2. 获得数据</h2><p>对于一些操作，可以把训练集和测试集合并处理，比如把数据集的标题转化为数值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">train_df = pd.read_csv(<span class="string">'./input/train.csv'</span>)</span><br><span class="line">test_df = pd.read_csv(<span class="string">'./input/test.csv'</span>)</span><br><span class="line">combine = [train_df, test_df]</span><br></pre></td></tr></table></figure>
+<h2 id="3-数据分析"><a href="#3-数据分析" class="headerlink" title="3. 数据分析"></a>3. 数据分析</h2><h3 id="数据集中有哪些特征？"><a href="#数据集中有哪些特征？" class="headerlink" title="数据集中有哪些特征？"></a>数据集中有哪些特征？</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(train_df.columns.values)</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>特征缩写</th>
+<th>特征含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PassengerId</td>
+<td>乘客编号</td>
+</tr>
+<tr>
+<td>Survived</td>
+<td>是否存活（1表示存活，0表示死亡）</td>
+</tr>
+<tr>
+<td>Pclass</td>
+<td>舱位等级（1-3表示舱位从高到低）</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>姓名</td>
+</tr>
+<tr>
+<td>Sex</td>
+<td>性别</td>
+</tr>
+<tr>
+<td>Age</td>
+<td>年龄</td>
+</tr>
+<tr>
+<td>SibSp</td>
+<td>一同乘船的兄弟姐妹或配偶的人数</td>
+</tr>
+<tr>
+<td>Parch</td>
+<td>一同乘船的父母或子女的人数</td>
+</tr>
+<tr>
+<td>Ticket</td>
+<td>票号</td>
+</tr>
+<tr>
+<td>Fare</td>
+<td>票价</td>
+</tr>
+<tr>
+<td>Cabin</td>
+<td>舱位号</td>
+</tr>
+<tr>
+<td>Embarked</td>
+<td>出发地（C指Cherbourg，Q指Queenstown，S指Southampton）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>不同特征具有不同的<a href="https://www.dummies.com/education/math/statistics/types-of-statistical-data-numerical-categorical-and-ordinal/" target="_blank" rel="noopener">数据类型</a>。</p>
+<ul>
+<li>分类型数据(categorical)<br>分类型数据一般表示事物的某种特性。题目中分类型数据为：Survived，Sex。</li>
+<li>顺序型数据(ordinal)<br>数据是有分类性质的，但衡量性质的数字也有实际意义。一般被归为分类型数据。本题中Pclass就是一个例子，数字1~3表示一等舱，二等舱，三等舱，舱位级别从高到低。</li>
+<li>数值型数据(numerical)<br>数值型数据一般分为离散型和连续型。其中离散型数据一般通过计数得到，本题中出现的是SibSp，Parch。连续型数据一般表示特征的测量值，不能被计数，只能通过区间去衡量，本题中有Age，Fare。</li>
+<li>混合型数据(mixed)<br>既包含数值，又包含字符。这种数据需要校正。本题中Ticker和Cabin这种数据就是混合型。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># preview the data</span></span><br><span class="line">train_df.head()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_df.tail()</span><br></pre></td></tr></table></figure>
+<h3 id="哪些特征的数据可能包含错误或缺失？"><a href="#哪些特征的数据可能包含错误或缺失？" class="headerlink" title="哪些特征的数据可能包含错误或缺失？"></a>哪些特征的数据可能包含错误或缺失？</h3><p>在姓名这个特征中，可能包含称呼，名字，外号等，容易在录入的时候出现错误。这种数据需要校正。<br>在训练集中，舱位号，年龄，出发地都存在数据缺失。在测试集中，舱位号和年龄也有缺失。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">train_df.info()</span><br><span class="line">print(<span class="string">'_'</span>*<span class="number">40</span>)</span><br><span class="line">test_df.info()</span><br></pre></td></tr></table></figure>
+<h3 id="样本中数值型数据的分布"><a href="#样本中数值型数据的分布" class="headerlink" title="样本中数值型数据的分布"></a>样本中数值型数据的分布</h3><ul>
+<li>题目所给乘客总人数为2224，死亡人数为1502，幸存人数为722，存活率为32.4%。  </li>
+<li>样本总数为891, 存活率为38.3%。 </li>
+<li>大多数的乘客(&gt;75%)没有和父母或孩子同行。 </li>
+<li>将近30%的乘客有兄弟姐妹或配偶也在船上。 </li>
+<li>不同乘客所购船票的票价差异很大，极少数人(1%)的票价高至$512。  </li>
+<li>年龄在65~80岁之间的乘客只占不到总数的1%。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数值型数据</span></span><br><span class="line">train_df.describe()</span><br><span class="line"></span><br><span class="line"><span class="comment"># survived的mean在另一层面上就是幸存者的比率。</span></span><br><span class="line"><span class="comment"># 通过调节 percentiles的参数，可以看到各项特征的参数</span></span><br><span class="line"><span class="comment"># 设置 percentiles=[.76, .77]，查看parch的数值分布变化</span></span><br><span class="line"><span class="comment"># 设置 percentiles=[.68, .69]，查看sibsp的数值分布变化</span></span><br><span class="line"><span class="comment"># 设置 percentiles=[.1, .2, .3, .4, .5, .6, .7, .8, .9, .99]，查看age和fare的数值分布变化</span></span><br></pre></td></tr></table></figure>
+<h3 id="样本中分类型数据的分布"><a href="#样本中分类型数据的分布" class="headerlink" title="样本中分类型数据的分布"></a>样本中分类型数据的分布</h3><ul>
+<li>样本中每个人名字是唯一的，没有重复的。</li>
+<li>样本中有577位男性，314位女性。</li>
+<li>舱位号的值存在重复，这说明有一些乘客共用一个船舱。</li>
+<li>出发地有三个，其中从Southampton出发的乘客最多。</li>
+<li>票号大约有22%的重复。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 分类型数据</span></span><br><span class="line">train_df.describe(include=[<span class="string">'O'</span>])</span><br></pre></td></tr></table></figure>
+<h3 id="一些假设"><a href="#一些假设" class="headerlink" title="一些假设"></a>一些假设</h3><ul>
+<li><strong>相关性(Correlating)</strong><br>我们想知道每个特征和是否存活的关系。这个工作需要在早期进行，把这些特征应用到预测模型中。<br><br> </li>
+<li><strong>完整性(Completing)</strong>  <ol>
+<li>年龄特征需要补全，因为题目告诉了它影响了乘客是否存活。  </li>
+<li>出发地特征也需要补全，因为它可能和存活率或其他特征有关。<br><br> </li>
+</ol>
+</li>
+<li><strong>校正(Correcting)</strong>  <ol>
+<li>票号特征可以去掉，因为它存在很高的重复率(22%)，而且它可能和存活率没有关系。  </li>
+<li>舱位号特征也可以去掉，因为它的数据大部分缺失，而且有很多空白值。  </li>
+<li>乘客编号和姓名也可以去掉，因为这类数据和存活率并没有直接联系。<br><br> </li>
+</ol>
+</li>
+<li><strong>新增特征(Creating)</strong>  <ol>
+<li>我们可能会新增一个特征叫做家庭成员，根据SibSp和Parch来计算这个乘客有多少个家人也一同登船。  </li>
+<li>我们可能会根据乘客姓名，提取乘客的title，并新建特征。  </li>
+<li>我们可能会把年龄特征改为年龄带，从而把数值型特征转变为顺序型特征。  </li>
+<li>我们可能会新增一个特征，来表示船票票价的区间。<br><br> </li>
+</ol>
+</li>
+<li><strong>分类(Classifying)</strong>    <ol>
+<li>女性乘客更可能存活。(Sex = female)  </li>
+<li>儿童更可能存活。(Age &lt; ?)  </li>
+<li>上层阶级更可能存活。(Pclass = 1)  </li>
+</ol>
+</li>
+</ul>
+<h3 id="数据透视"><a href="#数据透视" class="headerlink" title="数据透视"></a>数据透视</h3><p>为了确认我们的发现和假设，可以快速的分析一些特征和存活率的关系通过数据透视的方法（感觉这个翻译有点奇怪）。这种方法需要特征没有空值。满足条件的特征有Sex，Pclass，SibSp，Parch这四个。</p>
+<ul>
+<li><strong>Sex</strong><br>可以看到，女性乘客中，有74%的乘客最终存活。于是我们验证了<strong><em>classifying #1</em></strong>，女性乘客更容易存活。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_df[[<span class="string">"Sex"</span>, <span class="string">"Survived"</span>]].groupby([<span class="string">'Sex'</span>], as_index=<span class="keyword">False</span>).mean().sort_values(by=<span class="string">'Survived'</span>, ascending=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>Pclass</strong><br>可以看到，在一等舱的乘客中存活率达到了62.9%(&gt;50%)，这验证了<strong><em>classifying #3</em></strong>，上层阶级更容易存活。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_df[[<span class="string">'Pclass'</span>, <span class="string">'Survived'</span>]].groupby([<span class="string">'Pclass'</span>], as_index=<span class="keyword">False</span>).mean().sort_values(by=<span class="string">'Survived'</span>, ascending=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>SibSp 和 Parch</strong><br>把SibSp特征和Parch特征的数据结合起来，新建一个特征表示家庭成员的情况。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_df[[<span class="string">"SibSp"</span>, <span class="string">"Survived"</span>]].groupby([<span class="string">'SibSp'</span>], as_index=<span class="keyword">False</span>).mean().sort_values(by=<span class="string">'Survived'</span>, ascending=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_df[[<span class="string">"Parch"</span>, <span class="string">"Survived"</span>]].groupby([<span class="string">'Parch'</span>], as_index=<span class="keyword">False</span>).mean().sort_values(by=<span class="string">'Survived'</span>, ascending=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="4-数据可视化"><a href="#4-数据可视化" class="headerlink" title="4. 数据可视化"></a>4. 数据可视化</h2><h3 id="数值型特征与存活率"><a href="#数值型特征与存活率" class="headerlink" title="数值型特征与存活率"></a>数值型特征与存活率</h3><p>分析年龄与存活率的关系。<br>直方图的x轴表示乘客的数量。</p>
+<p><strong>观察</strong></p>
+<ul>
+<li>婴儿(Age &lt;= 4)有很高的存活率。</li>
+<li>最老的乘客(Age = 80)活下来了。</li>
+<li>很大一批年龄在15~25之间的乘客没有活下来。</li>
+<li>大多数乘客的年龄在15~35之间。</li>
+</ul>
+<p><strong>决定</strong><br>根据这个分析，我们应该：</p>
+<ul>
+<li>在预测模型中考虑年龄(Age)因素。<strong><em>(classifying #2)</em></strong></li>
+<li>补全Age特征下数据的空白。<strong><em>(completing #1)</em></strong></li>
+<li>把年龄分组。<strong><em>(creating #3)</em></strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g = sns.FacetGrid(train_df, col=<span class="string">'Survived'</span>)</span><br><span class="line">g.map(plt.hist, <span class="string">'Age'</span>, bins=<span class="number">20</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="顺序型特征与存活率"><a href="#顺序型特征与存活率" class="headerlink" title="顺序型特征与存活率"></a>顺序型特征与存活率</h3><p>分析年龄，舱位等级和存活率的关系。</p>
+<p><strong>观察</strong></p>
+<ul>
+<li>大多数乘客在三等舱(Pclass=3)，其中大部分人没能幸存。<strong><em>(classifying #3)</em></strong> (原文写的2 写错了？)  </li>
+<li>大多数的婴儿在二等舱和三等舱，而且大部分婴儿活了下来。<strong><em>(classifying #2)</em></strong>  </li>
+<li>大部分一等舱的乘客活了下来。<strong><em>(classifying #3)</em></strong></li>
+<li>三种舱位在各个年龄段的乘客中都有分布。</li>
+</ul>
+<p><strong>决定</strong></p>
+<ul>
+<li>应当把Pclass列入预测模型中。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">grid = sns.FacetGrid(train_df, col=<span class="string">'Pclass'</span>, hue=<span class="string">'Survived'</span>)</span><br><span class="line"><span class="comment">#grid = sns.FacetGrid(train_df, col='Survived', row='Pclass', size=2.2, aspect=1.6)</span></span><br><span class="line">grid.map(plt.hist, <span class="string">'Age'</span>, alpha=<span class="number">.5</span>, bins=<span class="number">20</span>)</span><br><span class="line">grid.add_legend();</span><br></pre></td></tr></table></figure>
+<h3 id="分类型特征与存活率"><a href="#分类型特征与存活率" class="headerlink" title="分类型特征与存活率"></a>分类型特征与存活率</h3><p>分析出发地，性别，舱位和存活率的关系。</p>
+<p><strong>观察</strong></p>
+<ul>
+<li>女性乘客比男性乘客有更高的存活率。<strong><em>classifying #1</em></strong></li>
+<li>只有从Cherbourg出发的乘客中，男性的存活率更高。这说明了Pclass和Embarked有联系，同样的，Pclass和Survived也有联系，但并不一定说明Embarked和Survived有直接联系。 </li>
+<li>对于从C和Q地出发的男乘客中，乘坐三等舱的乘客的存活率比二等舱高。<strong><em>completing #2</em></strong></li>
+<li>对于乘坐三等舱的乘客还有男乘客来说，他们的存活率在不同的出发地都不同。Ports of embarkation have varying survival rates for Pclass=3 and among male passengers.<strong><em>correlating #1</em></strong></li>
+</ul>
+<p><strong>决定</strong></p>
+<ul>
+<li>应当把Sex列入预测模型中。</li>
+<li>把出发地特征的数据补全。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">grid = sns.FacetGrid(train_df, col=<span class="string">'Embarked'</span>)</span><br><span class="line"><span class="comment">#grid = sns.FacetGrid(train_df, row='Embarked', size=2.2, aspect=1.6)</span></span><br><span class="line">grid.map(sns.pointplot, <span class="string">'Pclass'</span>, <span class="string">'Survived'</span>, <span class="string">'Sex'</span>, palette=<span class="string">'deep'</span>)</span><br><span class="line">grid.add_legend()</span><br></pre></td></tr></table></figure>
+<h3 id="分类型、数值型特征与存活率"><a href="#分类型、数值型特征与存活率" class="headerlink" title="分类型、数值型特征与存活率"></a>分类型、数值型特征与存活率</h3><p>分析出发地，性别，票价和存活率的关系。</p>
+<p><strong>观察</strong></p>
+<ul>
+<li>购买更贵票价的乘客有更高的存活率。<strong><em>creating #4</em></strong>  </li>
+<li>出发地和存活率有关系。<strong><em>correlating #1，completing #2</em></strong>  </li>
+</ul>
+<p><strong>决定</strong></p>
+<ul>
+<li>应当把票价区间列入预测模型。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#grid = sns.FacetGrid(train_df, col='Embarked', hue='Survived', palette=&#123;0: 'k', 1: 'b'&#125;)</span></span><br><span class="line">grid = sns.FacetGrid(train_df, row=<span class="string">'Embarked'</span>, col=<span class="string">'Survived'</span>, size=<span class="number">2.2</span>, aspect=<span class="number">1.6</span>)</span><br><span class="line">grid.map(sns.barplot, <span class="string">'Sex'</span>, <span class="string">'Fare'</span>, alpha=<span class="number">.5</span>, ci=<span class="keyword">None</span>)</span><br><span class="line">grid.add_legend()</span><br></pre></td></tr></table></figure>
+<h2 id="5-数据整理"><a href="#5-数据整理" class="headerlink" title="5. 数据整理"></a>5. 数据整理</h2><h3 id="去除无用特征"><a href="#去除无用特征" class="headerlink" title="去除无用特征"></a>去除无用特征</h3><p>没有用处的数据的清楚能简化分析，加速模型的训练。根据<strong><em>correcting #1</em></strong>和<strong><em>correcting #2</em></strong>，Ticket和Cabin应当去除。<br>注意训练集和测试集都要去除特征。  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"Before"</span>, train_df.shape, test_df.shape, combine[<span class="number">0</span>].shape, combine[<span class="number">1</span>].shape)</span><br><span class="line"></span><br><span class="line">train_df = train_df.drop([<span class="string">'Ticket'</span>, <span class="string">'Cabin'</span>], axis=<span class="number">1</span>)</span><br><span class="line">test_df = test_df.drop([<span class="string">'Ticket'</span>, <span class="string">'Cabin'</span>], axis=<span class="number">1</span>)</span><br><span class="line">combine = [train_df, test_df]</span><br><span class="line"></span><br><span class="line"><span class="string">"After"</span>, train_df.shape, test_df.shape, combine[<span class="number">0</span>].shape, combine[<span class="number">1</span>].shape</span><br></pre></td></tr></table></figure>
+<h3 id="新增Title特征"><a href="#新增Title特征" class="headerlink" title="新增Title特征"></a>新增Title特征</h3><p>通过正则表达式提取名字中的title。正则表达式<code>(\w+\.)</code>能匹配第一个以点为结尾的单词。</p>
+<p><strong>观察</strong><br>当我们观察title，age和存活率的关系，有以下发现： </p>
+<ul>
+<li>不同title间的年龄有明显差异，title很好的划分了年龄区间。  </li>
+<li>Survival among Title Age bands varies slightly. （这句不太理解）  </li>
+<li>某些特定的title都活下来了(Mme, Lady, Sir)，有些都没活下来(Don, Rev, Jonkheer)。  </li>
+</ul>
+<p><strong>决定</strong></p>
+<ul>
+<li>把title特征列入预测模型。  </li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 提取title，并加入已有的数据集中</span></span><br><span class="line"><span class="keyword">for</span> dataset <span class="keyword">in</span> combine:</span><br><span class="line">    dataset[<span class="string">'Title'</span>] = dataset.Name.str.extract(<span class="string">' ([A-Za-z]+)\.'</span>, expand=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line">pd.crosstab(train_df[<span class="string">'Title'</span>], train_df[<span class="string">'Sex'</span>])</span><br></pre></td></tr></table></figure>
+<p>把一些相似的title合并到一起，并把少见的title归到一个名为<code>rare</code>的title里。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> dataset <span class="keyword">in</span> combine:</span><br><span class="line">    dataset[<span class="string">'Title'</span>] = dataset[<span class="string">'Title'</span>].replace([<span class="string">'Lady'</span>, <span class="string">'Countess'</span>,<span class="string">'Capt'</span>, <span class="string">'Col'</span>,\</span><br><span class="line"> 	<span class="string">'Don'</span>, <span class="string">'Dr'</span>, <span class="string">'Major'</span>, <span class="string">'Rev'</span>, <span class="string">'Sir'</span>, <span class="string">'Jonkheer'</span>, <span class="string">'Dona'</span>], <span class="string">'Rare'</span>)</span><br><span class="line"></span><br><span class="line">    dataset[<span class="string">'Title'</span>] = dataset[<span class="string">'Title'</span>].replace(<span class="string">'Mlle'</span>, <span class="string">'Miss'</span>)</span><br><span class="line">    dataset[<span class="string">'Title'</span>] = dataset[<span class="string">'Title'</span>].replace(<span class="string">'Ms'</span>, <span class="string">'Miss'</span>)</span><br><span class="line">    dataset[<span class="string">'Title'</span>] = dataset[<span class="string">'Title'</span>].replace(<span class="string">'Mme'</span>, <span class="string">'Mrs'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练集中每个title下的存活率</span></span><br><span class="line">train_df[[<span class="string">'Title'</span>, <span class="string">'Survived'</span>]].groupby([<span class="string">'Title'</span>], as_index=<span class="keyword">False</span>).mean()</span><br></pre></td></tr></table></figure>
+<p>把分类型数据转换为顺序型数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">title_mapping = &#123;<span class="string">"Mr"</span>: <span class="number">1</span>, <span class="string">"Miss"</span>: <span class="number">2</span>, <span class="string">"Mrs"</span>: <span class="number">3</span>, <span class="string">"Master"</span>: <span class="number">4</span>, <span class="string">"Rare"</span>: <span class="number">5</span>&#125;</span><br><span class="line"><span class="keyword">for</span> dataset <span class="keyword">in</span> combine:</span><br><span class="line">    dataset[<span class="string">'Title'</span>] = dataset[<span class="string">'Title'</span>].map(title_mapping)</span><br><span class="line">    dataset[<span class="string">'Title'</span>] = dataset[<span class="string">'Title'</span>].fillna(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">train_df.head()</span><br></pre></td></tr></table></figure>
+<p>记得把name和PassengerID这两个特征去掉。<strong><em>correcting #3</em></strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">train_df = train_df.drop([<span class="string">'Name'</span>, <span class="string">'PassengerId'</span>], axis=<span class="number">1</span>)</span><br><span class="line">test_df = test_df.drop([<span class="string">'Name'</span>], axis=<span class="number">1</span>)</span><br><span class="line">combine = [train_df, test_df]</span><br><span class="line">train_df.shape, test_df.shape</span><br></pre></td></tr></table></figure>
+<h3 id="性别特征的数值化"><a href="#性别特征的数值化" class="headerlink" title="性别特征的数值化"></a>性别特征的数值化</h3><p>性别特征是分类型特征，为了在模型中能运用，需要把它转换为数值型特征。(female = 1, male = 0)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> dataset <span class="keyword">in</span> combine:</span><br><span class="line">    dataset[<span class="string">'Sex'</span>] = dataset[<span class="string">'Sex'</span>].map( &#123;<span class="string">'female'</span>: <span class="number">1</span>, <span class="string">'male'</span>: <span class="number">0</span>&#125; ).astype(int)</span><br><span class="line"></span><br><span class="line">train_df.head()</span><br></pre></td></tr></table></figure>
+<h3 id="补全年龄特征"><a href="#补全年龄特征" class="headerlink" title="补全年龄特征"></a>补全年龄特征</h3><p>原文给出三种方法去补全数据：</p>
+<ol>
+<li>根据原始数据，随机产生在均值和标准差之间的数值。</li>
+<li>根据相关的特征猜出缺失的年龄。比如年龄与Pclass和Sex有关，那么对于一个已知Pclass和Sex的乘客，可以猜测他/她的年龄为所有这个Pclass和Sex的乘客年龄的中位数。</li>
+<li>把方法1和2结合起来。对于所有该Pclass和Sex的乘客，计算他们年龄的均值与标准差，随机产生之间的数值作为猜测的年龄。  </li>
+</ol>
+<p>由于方法1和方法3会引入随机误差，每次的结果都不一样，所以这里采用方法2。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不同的Pclass和Sex一共有6种组合</span></span><br><span class="line"><span class="comment"># grid = sns.FacetGrid(train_df, col='Pclass', hue='Gender')</span></span><br><span class="line">grid = sns.FacetGrid(train_df, row=<span class="string">'Pclass'</span>, col=<span class="string">'Sex'</span>, size=<span class="number">2.2</span>, aspect=<span class="number">1.6</span>)</span><br><span class="line">grid.map(plt.hist, <span class="string">'Age'</span>, alpha=<span class="number">.5</span>, bins=<span class="number">20</span>)</span><br><span class="line">grid.add_legend()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新建空数组，用来储存这6种组合下的中位数</span></span><br><span class="line">guess_ages = np.zeros((<span class="number">2</span>,<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> dataset <span class="keyword">in</span> combine:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">2</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">3</span>):</span><br><span class="line">            guess_df = dataset[(dataset[<span class="string">'Sex'</span>] == i) &amp; \</span><br><span class="line">                                  (dataset[<span class="string">'Pclass'</span>] == j+<span class="number">1</span>)][<span class="string">'Age'</span>].dropna()</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 方法3</span></span><br><span class="line">            <span class="comment"># age_mean = guess_df.mean()</span></span><br><span class="line">            <span class="comment"># age_std = guess_df.std()</span></span><br><span class="line">            <span class="comment"># age_guess = rnd.uniform(age_mean - age_std, age_mean + age_std)</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 方法2</span></span><br><span class="line">            age_guess = guess_df.median()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Convert random age float to nearest .5 age</span></span><br><span class="line">            guess_ages[i,j] = int( age_guess/<span class="number">0.5</span> + <span class="number">0.5</span> ) * <span class="number">0.5</span></span><br><span class="line">            </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">2</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">3</span>):</span><br><span class="line">            dataset.loc[ (dataset.Age.isnull()) &amp; (dataset.Sex == i) &amp; (dataset.Pclass == j+<span class="number">1</span>),\</span><br><span class="line">                    <span class="string">'Age'</span>] = guess_ages[i,j]</span><br><span class="line"></span><br><span class="line">    dataset[<span class="string">'Age'</span>] = dataset[<span class="string">'Age'</span>].astype(int)</span><br><span class="line"></span><br><span class="line">train_df.head()</span><br></pre></td></tr></table></figure>
+<p>新建特征AgeBand，用来显示不同年龄区间下的存活率。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_df[<span class="string">'AgeBand'</span>] = pd.cut(train_df[<span class="string">'Age'</span>], <span class="number">5</span>)</span><br><span class="line">train_df[[<span class="string">'AgeBand'</span>, <span class="string">'Survived'</span>]].groupby([<span class="string">'AgeBand'</span>], as_index=<span class="keyword">False</span>).mean().sort_values(by=<span class="string">'AgeBand'</span>, ascending=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 根据AgeBand，把年龄换成顺序型数据。</span></span><br><span class="line"><span class="keyword">for</span> dataset <span class="keyword">in</span> combine:    </span><br><span class="line">    dataset.loc[ dataset[<span class="string">'Age'</span>] &lt;= <span class="number">16</span>, <span class="string">'Age'</span>] = <span class="number">0</span></span><br><span class="line">    dataset.loc[(dataset[<span class="string">'Age'</span>] &gt; <span class="number">16</span>) &amp; (dataset[<span class="string">'Age'</span>] &lt;= <span class="number">32</span>), <span class="string">'Age'</span>] = <span class="number">1</span></span><br><span class="line">    dataset.loc[(dataset[<span class="string">'Age'</span>] &gt; <span class="number">32</span>) &amp; (dataset[<span class="string">'Age'</span>] &lt;= <span class="number">48</span>), <span class="string">'Age'</span>] = <span class="number">2</span></span><br><span class="line">    dataset.loc[(dataset[<span class="string">'Age'</span>] &gt; <span class="number">48</span>) &amp; (dataset[<span class="string">'Age'</span>] &lt;= <span class="number">64</span>), <span class="string">'Age'</span>] = <span class="number">3</span></span><br><span class="line">    dataset.loc[ dataset[<span class="string">'Age'</span>] &gt; <span class="number">64</span>, <span class="string">'Age'</span>] = <span class="number">4</span></span><br><span class="line">    <span class="comment">#相比原文做了修改</span></span><br><span class="line">train_df.head()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 去掉AgeBand特征</span></span><br><span class="line">train_df = train_df.drop([<span class="string">'AgeBand'</span>], axis=<span class="number">1</span>)</span><br><span class="line">combine = [train_df, test_df]</span><br><span class="line">train_df.head()</span><br></pre></td></tr></table></figure>
+<h3 id="创建IsAlone特征"><a href="#创建IsAlone特征" class="headerlink" title="创建IsAlone特征"></a>创建IsAlone特征</h3><p>通过把Parch和SibSp特征结合起来，创建FamilySize特征，来记录与该乘客同行的所有家庭成员的数量。  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> dataset <span class="keyword">in</span> combine:</span><br><span class="line">    dataset[<span class="string">'FamilySize'</span>] = dataset[<span class="string">'SibSp'</span>] + dataset[<span class="string">'Parch'</span>] + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">train_df[[<span class="string">'FamilySize'</span>, <span class="string">'Survived'</span>]].groupby([<span class="string">'FamilySize'</span>], as_index=<span class="keyword">False</span>).mean().sort_values(by=<span class="string">'Survived'</span>, ascending=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure>
+<p>可以发现，不同FamilySize下乘客的存活率并没有明显关联。因此，尝试创建一个IsAlone特征，来区分独自乘船和有家人陪同乘船的乘客。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> dataset <span class="keyword">in</span> combine:</span><br><span class="line">    dataset[<span class="string">'IsAlone'</span>] = <span class="number">0</span></span><br><span class="line">    dataset.loc[dataset[<span class="string">'FamilySize'</span>] == <span class="number">1</span>, <span class="string">'IsAlone'</span>] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">train_df[[<span class="string">'IsAlone'</span>, <span class="string">'Survived'</span>]].groupby([<span class="string">'IsAlone'</span>], as_index=<span class="keyword">False</span>).mean()</span><br></pre></td></tr></table></figure>
+<p>可以看出，独自乘船和有家人陪同乘船的乘客，存活率有明显差异。因此，保留IsAlone特征，去除Parch、SibSp和FamilySize特征。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">train_df = train_df.drop([<span class="string">'Parch'</span>, <span class="string">'SibSp'</span>, <span class="string">'FamilySize'</span>], axis=<span class="number">1</span>)</span><br><span class="line">test_df = test_df.drop([<span class="string">'Parch'</span>, <span class="string">'SibSp'</span>, <span class="string">'FamilySize'</span>], axis=<span class="number">1</span>)</span><br><span class="line">combine = [train_df, test_df]</span><br><span class="line"></span><br><span class="line">train_df.head()</span><br></pre></td></tr></table></figure>
+<h3 id="新建Age-Class特征"><a href="#新建Age-Class特征" class="headerlink" title="新建Age*Class特征"></a>新建Age*Class特征</h3><p>把Age和Pclass相乘，获得Age*Class特征。（不太理解为什么要加这个特征）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> dataset <span class="keyword">in</span> combine:</span><br><span class="line">    dataset[<span class="string">'Age*Class'</span>] = dataset.Age * dataset.Pclass</span><br><span class="line"></span><br><span class="line">train_df.loc[:, [<span class="string">'Age*Class'</span>, <span class="string">'Age'</span>, <span class="string">'Pclass'</span>]].head(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="处理Embarked特征"><a href="#处理Embarked特征" class="headerlink" title="处理Embarked特征"></a>处理Embarked特征</h3><p>训练集中有两组数据缺少Embarked特征，在这里简单的补全为Embarked的众数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># S</span></span><br><span class="line">freq_port = train_df.Embarked.dropna().mode()[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> dataset <span class="keyword">in</span> combine:</span><br><span class="line">    dataset[<span class="string">'Embarked'</span>] = dataset[<span class="string">'Embarked'</span>].fillna(freq_port)</span><br><span class="line">    </span><br><span class="line">train_df[[<span class="string">'Embarked'</span>, <span class="string">'Survived'</span>]].groupby([<span class="string">'Embarked'</span>], as_index=<span class="keyword">False</span>).mean().sort_values(by=<span class="string">'Survived'</span>, ascending=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure>
+<p>Embarked特征为分类型特征，需要转化为数值型特征才能用到预测模型中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> dataset <span class="keyword">in</span> combine:</span><br><span class="line">    dataset[<span class="string">'Embarked'</span>] = dataset[<span class="string">'Embarked'</span>].map( &#123;<span class="string">'S'</span>: <span class="number">0</span>, <span class="string">'C'</span>: <span class="number">1</span>, <span class="string">'Q'</span>: <span class="number">2</span>&#125; ).astype(int)</span><br><span class="line"></span><br><span class="line">train_df.head()</span><br></pre></td></tr></table></figure>
+<h3 id="处理Fare特征"><a href="#处理Fare特征" class="headerlink" title="处理Fare特征"></a>处理Fare特征</h3><p>测试集中有一组数据的fare特征丢失，在这里简单的补全为fare特征的众数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">test_df[<span class="string">'Fare'</span>].fillna(test_df[<span class="string">'Fare'</span>].dropna().median(), inplace=<span class="keyword">True</span>)</span><br><span class="line">test_df.head()</span><br></pre></td></tr></table></figure>
+<p>类似于Age特征，为了方便计算，这里把Fare特征先转换为FareBand，再转换为顺序型特征。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_df[<span class="string">'FareBand'</span>] = pd.qcut(train_df[<span class="string">'Fare'</span>], <span class="number">4</span>)</span><br><span class="line">train_df[[<span class="string">'FareBand'</span>, <span class="string">'Survived'</span>]].groupby([<span class="string">'FareBand'</span>], as_index=<span class="keyword">False</span>).mean().sort_values(by=<span class="string">'FareBand'</span>, ascending=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> dataset <span class="keyword">in</span> combine:</span><br><span class="line">    dataset.loc[ dataset[<span class="string">'Fare'</span>] &lt;= <span class="number">7.91</span>, <span class="string">'Fare'</span>] = <span class="number">0</span></span><br><span class="line">    dataset.loc[(dataset[<span class="string">'Fare'</span>] &gt; <span class="number">7.91</span>) &amp; (dataset[<span class="string">'Fare'</span>] &lt;= <span class="number">14.454</span>), <span class="string">'Fare'</span>] = <span class="number">1</span></span><br><span class="line">    dataset.loc[(dataset[<span class="string">'Fare'</span>] &gt; <span class="number">14.454</span>) &amp; (dataset[<span class="string">'Fare'</span>] &lt;= <span class="number">31</span>), <span class="string">'Fare'</span>]   = <span class="number">2</span></span><br><span class="line">    dataset.loc[ dataset[<span class="string">'Fare'</span>] &gt; <span class="number">31</span>, <span class="string">'Fare'</span>] = <span class="number">3</span></span><br><span class="line">    dataset[<span class="string">'Fare'</span>] = dataset[<span class="string">'Fare'</span>].astype(int)</span><br><span class="line"></span><br><span class="line">train_df = train_df.drop([<span class="string">'FareBand'</span>], axis=<span class="number">1</span>)</span><br><span class="line">combine = [train_df, test_df]</span><br><span class="line">    </span><br><span class="line">train_df.head(<span class="number">10</span>)</span><br><span class="line"><span class="comment">#test_df.head(10)</span></span><br></pre></td></tr></table></figure>
+<h2 id="6-模型的建立、训练与预测"><a href="#6-模型的建立、训练与预测" class="headerlink" title="6. 模型的建立、训练与预测"></a>6. 模型的建立、训练与预测</h2><p>本题目是一个二元分类与回归型问题。适合该题目的预测模型有如下几种：</p>
+<ul>
+<li>Logistic Regression（逻辑回归）</li>
+<li>KNN or k-Nearest Neighbors（K近邻）</li>
+<li>Support Vector Machines（支持向量机）</li>
+<li>Naive Bayes classifier（朴素贝叶斯分类器）</li>
+<li>Decision Tree（决策树）</li>
+<li>Random Forrest（随机森林）</li>
+<li>Perceptron（感知机）</li>
+<li>Artificial neural network（人工神经网络）</li>
+<li>RVM or Relevance Vector Machine（相关向量机）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X_train = train_df.drop(<span class="string">"Survived"</span>, axis=<span class="number">1</span>)</span><br><span class="line">Y_train = train_df[<span class="string">"Survived"</span>]</span><br><span class="line">X_test  = test_df.drop(<span class="string">"PassengerId"</span>, axis=<span class="number">1</span>).copy()</span><br><span class="line">X_train.shape, Y_train.shape, X_test.shape</span><br></pre></td></tr></table></figure>
+<h3 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">logreg = LogisticRegression()</span><br><span class="line">logreg.fit(X_train, Y_train)</span><br><span class="line">Y_pred = logreg.predict(X_test)</span><br><span class="line">acc_log = round(logreg.score(X_train, Y_train) * <span class="number">100</span>, <span class="number">2</span>)</span><br><span class="line">acc_log</span><br></pre></td></tr></table></figure>
+<p>通过logistic Regression模型的参数，我们可以验证之前的假设。越大的参数值说明该特征对结果的影响越大。参数值的正负也表现出特征和结果的正负相关。</p>
+<ul>
+<li>Sex参数有最大的数值，说明性别对存活率的影响最大。</li>
+<li>相应的，Pclass越大，存活率越低。</li>
+<li>Age*Class对存活率有第二大的负相关。</li>
+<li>Title有第二大的正相关。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">coeff_df = pd.DataFrame(train_df.columns.delete(<span class="number">0</span>))</span><br><span class="line">coeff_df.columns = [<span class="string">'Feature'</span>]</span><br><span class="line">coeff_df[<span class="string">"Correlation"</span>] = pd.Series(logreg.coef_[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">coeff_df.sort_values(by=<span class="string">'Correlation'</span>, ascending=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="Support-Vector-Machines"><a href="#Support-Vector-Machines" class="headerlink" title="Support Vector Machines"></a>Support Vector Machines</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">svc = SVC()</span><br><span class="line">svc.fit(X_train, Y_train)</span><br><span class="line">Y_pred = svc.predict(X_test)</span><br><span class="line">acc_svc = round(svc.score(X_train, Y_train) * <span class="number">100</span>, <span class="number">2</span>)</span><br><span class="line">acc_svc</span><br></pre></td></tr></table></figure>
+<h3 id="k-Nearest-Neighbors"><a href="#k-Nearest-Neighbors" class="headerlink" title="k-Nearest Neighbors"></a>k-Nearest Neighbors</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">knn = KNeighborsClassifier(n_neighbors = <span class="number">3</span>)</span><br><span class="line">knn.fit(X_train, Y_train)</span><br><span class="line">Y_pred = knn.predict(X_test)</span><br><span class="line">acc_knn = round(knn.score(X_train, Y_train) * <span class="number">100</span>, <span class="number">2</span>)</span><br><span class="line">acc_knn</span><br></pre></td></tr></table></figure>
+<h3 id="Naive-Bayes-Nlassifiers"><a href="#Naive-Bayes-Nlassifiers" class="headerlink" title="Naive Bayes Nlassifiers"></a>Naive Bayes Nlassifiers</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gaussian = GaussianNB()</span><br><span class="line">gaussian.fit(X_train, Y_train)</span><br><span class="line">Y_pred = gaussian.predict(X_test)</span><br><span class="line">acc_gaussian = round(gaussian.score(X_train, Y_train) * <span class="number">100</span>, <span class="number">2</span>)</span><br><span class="line">acc_gaussian</span><br></pre></td></tr></table></figure>
+<h3 id="Perceptron"><a href="#Perceptron" class="headerlink" title="Perceptron"></a>Perceptron</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">perceptron = Perceptron()</span><br><span class="line">perceptron.fit(X_train, Y_train)</span><br><span class="line">Y_pred = perceptron.predict(X_test)</span><br><span class="line">acc_perceptron = round(perceptron.score(X_train, Y_train) * <span class="number">100</span>, <span class="number">2</span>)</span><br><span class="line">acc_perceptron</span><br></pre></td></tr></table></figure>
+<h3 id="Linear-SVC"><a href="#Linear-SVC" class="headerlink" title="Linear SVC"></a>Linear SVC</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">linear_svc = LinearSVC()</span><br><span class="line">linear_svc.fit(X_train, Y_train)</span><br><span class="line">Y_pred = linear_svc.predict(X_test)</span><br><span class="line">acc_linear_svc = round(linear_svc.score(X_train, Y_train) * <span class="number">100</span>, <span class="number">2</span>)</span><br><span class="line">acc_linear_svc</span><br></pre></td></tr></table></figure>
+<h3 id="Stochastic-Gradient-Descent"><a href="#Stochastic-Gradient-Descent" class="headerlink" title="Stochastic Gradient Descent"></a>Stochastic Gradient Descent</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sgd = SGDClassifier()</span><br><span class="line">sgd.fit(X_train, Y_train)</span><br><span class="line">Y_pred = sgd.predict(X_test)</span><br><span class="line">acc_sgd = round(sgd.score(X_train, Y_train) * <span class="number">100</span>, <span class="number">2</span>)</span><br><span class="line">acc_sgd</span><br></pre></td></tr></table></figure>
+<h3 id="Decision-Tree"><a href="#Decision-Tree" class="headerlink" title="Decision Tree"></a>Decision Tree</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">decision_tree = DecisionTreeClassifier()</span><br><span class="line">decision_tree.fit(X_train, Y_train)</span><br><span class="line">Y_pred = decision_tree.predict(X_test)</span><br><span class="line">acc_decision_tree = round(decision_tree.score(X_train, Y_train) * <span class="number">100</span>, <span class="number">2</span>)</span><br><span class="line">acc_decision_tree</span><br></pre></td></tr></table></figure>
+<h3 id="Random-Forest"><a href="#Random-Forest" class="headerlink" title="Random Forest"></a>Random Forest</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">random_forest = RandomForestClassifier(n_estimators=<span class="number">100</span>)</span><br><span class="line">random_forest.fit(X_train, Y_train)</span><br><span class="line">Y_pred = random_forest.predict(X_test)</span><br><span class="line">random_forest.score(X_train, Y_train)</span><br><span class="line">acc_random_forest = round(random_forest.score(X_train, Y_train) * <span class="number">100</span>, <span class="number">2</span>)</span><br><span class="line">acc_random_forest</span><br></pre></td></tr></table></figure>
+<h3 id="Model-evaluation"><a href="#Model-evaluation" class="headerlink" title="Model evaluation"></a>Model evaluation</h3><p>对各个模型进行排名。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">models = pd.DataFrame(&#123;</span><br><span class="line">    <span class="string">'Model'</span>: [<span class="string">'Support Vector Machines'</span>, <span class="string">'KNN'</span>, <span class="string">'Logistic Regression'</span>, </span><br><span class="line">              <span class="string">'Random Forest'</span>, <span class="string">'Naive Bayes'</span>, <span class="string">'Perceptron'</span>, </span><br><span class="line">              <span class="string">'Stochastic Gradient Decent'</span>, <span class="string">'Linear SVC'</span>, </span><br><span class="line">              <span class="string">'Decision Tree'</span>],</span><br><span class="line">    <span class="string">'Score'</span>: [acc_svc, acc_knn, acc_log, </span><br><span class="line">              acc_random_forest, acc_gaussian, acc_perceptron, </span><br><span class="line">              acc_sgd, acc_linear_svc, acc_decision_tree]&#125;)</span><br><span class="line">models.sort_values(by=<span class="string">'Score'</span>, ascending=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 储存结果</span></span><br><span class="line">submission = pd.DataFrame(&#123;</span><br><span class="line">        <span class="string">"PassengerId"</span>: test_df[<span class="string">"PassengerId"</span>],</span><br><span class="line">        <span class="string">"Survived"</span>: Y_pred</span><br><span class="line">    &#125;)</span><br><span class="line">submission.to_csv(<span class="string">'./output/submission.csv'</span>, index=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/07/Integer-Sorting-快速排序/" rel="next" title="Integer Sorting - 快速排序">
+                <i class="fa fa-chevron-left"></i> Integer Sorting - 快速排序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/portrait.jpeg" alt="fanshehu">
+            
+              <p class="site-author-name" itemprop="name">fanshehu</p>
+              <p class="site-description motion-element" itemprop="description">不忘初心 方得始终</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/fanshehu" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yl4427@nyu.edu" target="_blank" title="E Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.linkedin.com/in/yutian-li-750976a6/" target="_blank" title="Linkedin">
+                      
+                        <i class="fa fa-fw fa-linkedin"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-问题描述"><span class="nav-number">1.</span> <span class="nav-text">1. 问题描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前期准备"><span class="nav-number">1.1.</span> <span class="nav-text">前期准备</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-获得数据"><span class="nav-number">2.</span> <span class="nav-text">2. 获得数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-数据分析"><span class="nav-number">3.</span> <span class="nav-text">3. 数据分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据集中有哪些特征？"><span class="nav-number">3.1.</span> <span class="nav-text">数据集中有哪些特征？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据类型"><span class="nav-number">3.2.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#哪些特征的数据可能包含错误或缺失？"><span class="nav-number">3.3.</span> <span class="nav-text">哪些特征的数据可能包含错误或缺失？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#样本中数值型数据的分布"><span class="nav-number">3.4.</span> <span class="nav-text">样本中数值型数据的分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#样本中分类型数据的分布"><span class="nav-number">3.5.</span> <span class="nav-text">样本中分类型数据的分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些假设"><span class="nav-number">3.6.</span> <span class="nav-text">一些假设</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据透视"><span class="nav-number">3.7.</span> <span class="nav-text">数据透视</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-数据可视化"><span class="nav-number">4.</span> <span class="nav-text">4. 数据可视化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数值型特征与存活率"><span class="nav-number">4.1.</span> <span class="nav-text">数值型特征与存活率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顺序型特征与存活率"><span class="nav-number">4.2.</span> <span class="nav-text">顺序型特征与存活率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类型特征与存活率"><span class="nav-number">4.3.</span> <span class="nav-text">分类型特征与存活率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类型、数值型特征与存活率"><span class="nav-number">4.4.</span> <span class="nav-text">分类型、数值型特征与存活率</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-数据整理"><span class="nav-number">5.</span> <span class="nav-text">5. 数据整理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#去除无用特征"><span class="nav-number">5.1.</span> <span class="nav-text">去除无用特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增Title特征"><span class="nav-number">5.2.</span> <span class="nav-text">新增Title特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性别特征的数值化"><span class="nav-number">5.3.</span> <span class="nav-text">性别特征的数值化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#补全年龄特征"><span class="nav-number">5.4.</span> <span class="nav-text">补全年龄特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建IsAlone特征"><span class="nav-number">5.5.</span> <span class="nav-text">创建IsAlone特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新建Age-Class特征"><span class="nav-number">5.6.</span> <span class="nav-text">新建Age*Class特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理Embarked特征"><span class="nav-number">5.7.</span> <span class="nav-text">处理Embarked特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理Fare特征"><span class="nav-number">5.8.</span> <span class="nav-text">处理Fare特征</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-模型的建立、训练与预测"><span class="nav-number">6.</span> <span class="nav-text">6. 模型的建立、训练与预测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Logistic-Regression"><span class="nav-number">6.1.</span> <span class="nav-text">Logistic Regression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Support-Vector-Machines"><span class="nav-number">6.2.</span> <span class="nav-text">Support Vector Machines</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k-Nearest-Neighbors"><span class="nav-number">6.3.</span> <span class="nav-text">k-Nearest Neighbors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Naive-Bayes-Nlassifiers"><span class="nav-number">6.4.</span> <span class="nav-text">Naive Bayes Nlassifiers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Perceptron"><span class="nav-number">6.5.</span> <span class="nav-text">Perceptron</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linear-SVC"><span class="nav-number">6.6.</span> <span class="nav-text">Linear SVC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stochastic-Gradient-Descent"><span class="nav-number">6.7.</span> <span class="nav-text">Stochastic Gradient Descent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Decision-Tree"><span class="nav-number">6.8.</span> <span class="nav-text">Decision Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Random-Forest"><span class="nav-number">6.9.</span> <span class="nav-text">Random Forest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Model-evaluation"><span class="nav-number">6.10.</span> <span class="nav-text">Model evaluation</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanshehu</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+</div>
+
+<span class="post-meta-divider">|</span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
