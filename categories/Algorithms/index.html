@@ -79,14 +79,16 @@
 
 
 
-<meta property="og:type" content="article">
-<meta property="og:title" content="链表-LinkedList">
-<meta property="og:url" content="http://fanshehu.github.io/2018/12/22/DataStructures/链表-LinkedList/index.html">
+<meta name="description" content="不忘初心 方得始终">
+<meta property="og:type" content="website">
+<meta property="og:title" content="fanshehu">
+<meta property="og:url" content="http://fanshehu.github.io/categories/Algorithms/index.html">
 <meta property="og:site_name" content="fanshehu">
+<meta property="og:description" content="不忘初心 方得始终">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-06T19:02:19.534Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="链表-LinkedList">
+<meta name="twitter:title" content="fanshehu">
+<meta name="twitter:description" content="不忘初心 方得始终">
 
 
 
@@ -116,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://fanshehu.github.io/2018/12/22/DataStructures/链表-LinkedList/">
+  <link rel="canonical" href="http://fanshehu.github.io/categories/Algorithms/">
 
 
 
 
 
-  <title>链表-LinkedList | fanshehu</title>
+  <title>分类: Algorithms | fanshehu</title>
   
 
 
@@ -141,7 +143,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -225,199 +227,53 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block category">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>Algorithms<small>分类</small>
+        </h1>
+      </div>
 
-  
-  
-  
+      
+        
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fanshehu.github.io/2018/12/22/DataStructures/链表-LinkedList/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="fanshehu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/portrait.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="fanshehu">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
+            <a class="post-title-link" href="/2019/04/22/排序算法-Sorting Algorithm/" itemprop="url">
+              
+                <span itemprop="name">sorting</span>
+              
+            </a>
         
-          <h1 class="post-title" itemprop="name headline">链表-LinkedList</h1>
-        
+      </h2>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-22T00:00:00-05:00">
-                2018-12-22
-              </time>
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2019-04-22T15:00:28-04:00" content="2019-04-22">
+          04-22
+        </time>
+      </div>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Data-Structures/" itemprop="url" rel="index">
-                    <span itemprop="name">Data Structures</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  320
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <!-- 呀哈哈    -->
-<a id="more"></a> 
-<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>链表和数组类似，但相比于数组，链表有动态大小。而且插入和删除的效率很高，只要O(1)的时间。但是链表的遍历效率并不高。<br>Java中，链表为<code>LinkedList</code>类，每个节点由内置静态类Node实现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">private static class Node&lt;E&gt; &#123;</span><br><span class="line">        E item;</span><br><span class="line">        Node&lt;E&gt; next;</span><br><span class="line">        Node&lt;E&gt; prev;</span><br><span class="line">        Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) &#123;</span><br><span class="line">            this.item = element;</span><br><span class="line">            this.next = next;</span><br><span class="line">            this.prev = prev;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这种链表为双向链表，每个节点储存它前面的节点，后面的节点，以及它自身的值。也可以去掉节点的<code>prev</code>属性，变为单向链表。</p>
-<h3 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h3><p>Java中<code>LinkedList</code>类的方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">LinkedList&lt;Integer&gt; l = new LinkedList&lt;&gt;();</span><br><span class="line">l.size(); // 链表的长度</span><br><span class="line">l.get(); // 返回链表某个位置的元素</span><br><span class="line">l.add(); // 向链表某个位置添加元素</span><br><span class="line">l.addFirst(); // 向链表头添加元素</span><br><span class="line">l.addLast(); // 向链表尾添加元素</span><br><span class="line">l.remove(); // 删除链表某个位置的元素</span><br></pre></td></tr></table></figure>
-<h3 id="Lintcode相关题目"><a href="#Lintcode相关题目" class="headerlink" title="Lintcode相关题目"></a>Lintcode相关题目</h3><ul>
-<li>遍历<br><a href="">Convert Linked List to Array List</a><br><a href="">Convert Array List to Linked List</a><br><a href="">Count Linked List Nodes</a></li>
-<li>反转<br><a href="">Reverse Linked List</a><br><a href="">Reverse Linked List II</a><br><a href="">Reverse Nodes in K Group</a></li>
-<li>合并<br><a href="">Merge Two Sorted Lists</a><br><a href="">Merge k Sorted Lists</a></li>
-<li>递归<br><a href="">Linked List Weighted Sum in Reverse Order</a><br><a href="">Reverse Order Storage</a></li>
-<li>其他<br><a href="">Copy List with Random Pointer</a><br><a href="">Linked List Cycle</a><br><a href="">Linked List Cycle II</a></li>
-</ul>
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/12/20/DataStructures/字符串-String/" rel="next" title="字符串-String">
-                <i class="fa fa-chevron-left"></i> 字符串-String
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/12/28/DataStructures/二叉树-BinaryTree/" rel="prev" title="二叉树-BinaryTree">
-                二叉树-BinaryTree <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
       
     </div>
+
   </div>
+  
+  
+  
+
+  
+
 
 
           </div>
@@ -425,10 +281,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -449,17 +301,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -534,22 +377,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本操作"><span class="nav-number">2.</span> <span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lintcode相关题目"><span class="nav-number">3.</span> <span class="nav-text">Lintcode相关题目</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -702,10 +529,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
