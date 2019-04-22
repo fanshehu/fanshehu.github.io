@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="双指针算法-Two Pointers">
+<meta property="og:url" content="http://fanshehu.github.io/2019/04/22/Algorithms/双指针算法-Two Pointers/index.html">
+<meta property="og:site_name" content="fanshehu">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-22T20:18:52.952Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="双指针算法-Two Pointers">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fanshehu.github.io/2019/04/22/Algorithms/双指针算法-Two Pointers/">
+
+
+
+
+
+  <title>双指针算法-Two Pointers | fanshehu</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fanshehu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fanshehu.github.io/2019/04/22/Algorithms/双指针算法-Two Pointers/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fanshehu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/portrait.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fanshehu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">双指针算法-Two Pointers</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-22T00:00:00-04:00">
+                2019-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithms/" itemprop="url" rel="index">
+                    <span itemprop="name">Algorithms</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <!-- 呀哈哈 -->
+<a id="more"></a>
+<h3 id="同向双指针"><a href="#同向双指针" class="headerlink" title="同向双指针"></a>同向双指针</h3><h4 id="1-滑动窗口问题"><a href="#1-滑动窗口问题" class="headerlink" title="1. 滑动窗口问题"></a>1. 滑动窗口问题</h4><p>在一个长度为n的数组中，求满足条件的一段长度为k的子数组。</p>
+<ul>
+<li><p><a href="https://www.lintcode.com/problem/window-sum/description" target="_blank" rel="noopener">Window Sum</a><br>给一个大小为n的整型数组和一个大小为k的滑动窗口，将滑动窗口从头移到尾，输出从开始到结束每一个时刻滑动窗口内的数的和。</p>
+</li>
+<li><p><a href="https://www.lintcode.com/problem/minimum-size-subarray-sum/description" target="_blank" rel="noopener">Minimum Size Subarray Sum</a><br>给定一个由 n个正整数组成的数组和一个正整数 s ，请找出该数组中满足其和 ≥ s 的最小长度子数组。如果无解，则返回 -1。</p>
+</li>
+<li><p><a href="https://www.lintcode.com/problem/sliding-window-median/description" target="_blank" rel="noopener">Sliding Window Median</a><br>给定一个包含 n 个整数的数组，和一个大小为k的滑动窗口,从左到右在数组中滑动这个窗口，找到数组中每个窗口内的中位数。<br><strong>使用两个Heap, 一个大根堆，一个小根堆。大根堆储存小于等于当前中位数的元素，小根堆储存比当前中位数大的元素。维持大根堆的大小等于小根堆，或比小根堆多1. 这样大根堆的堆顶就是当前窗口中的中位数了。</strong></p>
+</li>
+<li><p><a href="https://www.lintcode.com/problem/sliding-window-maximum/description" target="_blank" rel="noopener">Sliding Window Maximum</a><br>给出一个可能包含重复的整数数组，和一个大小为k的滑动窗口, 从左到右在数组中滑动这个窗口，找到数组中每个窗口内的最大值。</p>
+</li>
+<li><p><a href="https://www.lintcode.com/problem/minimum-window-substring/description" target="_blank" rel="noopener">Minimum Window Substring</a><br>给定一个字符串source和一个目标字符串target，在字符串source中找到包括所有目标字符串字母的最短子串。</p>
+</li>
+</ul>
+<h4 id="2-快慢指针"><a href="#2-快慢指针" class="headerlink" title="2. 快慢指针"></a>2. 快慢指针</h4><p>在遍历链表的过程中，使用两个指针，其中一个比另一个的位置更靠前。</p>
+<ul>
+<li><a href="https://www.lintcode.com/problem/linked-list-cycle-ii/description" target="_blank" rel="noopener">Linked List Cycle II</a><br>给定一个链表，如果链表中存在环，则返回到链表中环的起始节点，如果没有环，返回null。<br><strong>快慢指针，快指针一次走两步，慢指针走一步。当两指针相遇，则说明链表中有环。</strong></li>
+</ul>
+<h3 id="相向双指针"><a href="#相向双指针" class="headerlink" title="相向双指针"></a>相向双指针</h3><h4 id="1-判断回文串"><a href="#1-判断回文串" class="headerlink" title="1. 判断回文串"></a>1. 判断回文串</h4><ul>
+<li><a href="https://www.lintcode.com/problem/valid-palindrome/description" target="_blank" rel="noopener">Valid Palindrome</a><br>给定一个字符串，判断其是否为一个回文串。只考虑字母和数字，忽略大小写。<br><strong>空串也是回文串</strong></li>
+</ul>
+<h4 id="2-两数和问题"><a href="#2-两数和问题" class="headerlink" title="2. 两数和问题"></a>2. 两数和问题</h4><ul>
+<li><a href="https://www.lintcode.com/problem/two-sum/description" target="_blank" rel="noopener">Two Sum</a><br>给一个整数数组，找到两个数使得他们的和等于一个给定的数target.<br>– <strong>方法1：枚举两个数，看它们的和是否等于target。</strong><br>– 时间复杂度：$O(n^2)$<br>– 空间复杂度：$O(1)$<br>– <strong>方法2：遍历数组，用hashmap储存走过的数。如果target与当前数的差已经在hashmap中，返回这两个数的下标。</strong><br>– 时间复杂度：$O(n)$<br>– 空间复杂度：$O(n)$<br>– <strong>方法3：用自定义类储存每个数的值与下标，将数组从小到大排列。左指针从数组头开始，右指针从数组尾开始。当左右指针指向的数的和小于target的时候，左指针右移一位；大于target的时候，右指针左移一位；等于target的时候返回下标。</strong><br>– 时间复杂度：$O(nlogn)$<br>– 空间复杂度：$O(n)$</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// HashMap</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] numbers, <span class="keyword">int</span> target) &#123;</span><br><span class="line">	Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numbers.length; i++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (map.containsKey(target - numbers[i])) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;map.get(target - numbers[i]), i&#125;;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			map.put(numbers[i], i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Two Pointers</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span> val, index;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(<span class="keyword">int</span> val, <span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">this</span>.val = val;</span><br><span class="line">			<span class="keyword">this</span>.index = index;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] numbers, <span class="keyword">int</span> target) &#123;</span><br><span class="line">		<span class="comment">// 构建自定义类，并排序。</span></span><br><span class="line">		<span class="keyword">int</span> n = numbers.length;</span><br><span class="line">		Node[] nodes = <span class="keyword">new</span> Node[n];</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">			nodes[i] = <span class="keyword">new</span> Node(numbers[i], i);</span><br><span class="line">		&#125;</span><br><span class="line">		Comparator&lt;Node&gt; nodeComparator = <span class="keyword">new</span> Comparator&lt;Node&gt;()&#123;</span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Node n1, Node n2)</span> </span>&#123;</span><br><span class="line">				<span class="keyword">if</span> (n1.val == n2.val) &#123;</span><br><span class="line">					<span class="keyword">return</span> n1.index - n2.index;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">return</span> n1.val - n2.val;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;;</span><br><span class="line">		Arrays.sort(nodes, nodeComparator); </span><br><span class="line">		<span class="comment">// 相向双指针查找目标解</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">0</span>, r = n - <span class="number">1</span>; l &lt; r; r--) &#123;</span><br><span class="line">			<span class="keyword">while</span> (l &lt; r &amp;&amp; nodes[l].val + nodes[r].val &lt; target) &#123;</span><br><span class="line">				l++;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">// 找到目标解</span></span><br><span class="line">			<span class="keyword">if</span> (nodes[l].val + nodes[r].val == target) &#123;</span><br><span class="line">				<span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;nodes[l].index, nodes[r].index&#125;;</span><br><span class="line">				Arrays.sort(res);</span><br><span class="line">				<span class="keyword">return</span> res;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><a href="https://www.lintcode.com/problem/two-sum-ii-input-array-is-sorted/description" target="_blank" rel="noopener">Two Sum II - Input array is sorted</a><br>给定一个已经按升序排列的数组，找到两个数使他们加起来的和等于特定数。<br>函数应该返回这两个数的下标，index1必须小于index2。<br><strong>双指针算法，在O(n)时间内完成。</strong></p>
+</li>
+<li><p><a href="https://www.lintcode.com/problem/two-sum-unique-pairs/description" target="_blank" rel="noopener">Two Sum - Unique Pairs</a><br>给一整数数组, 找到数组中有多少组不同的元素对有相同的和, 且和为给出的 target 值, 返回对数。<br><strong>双指针算法，注意去重。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">twoSum</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (nums == <span class="keyword">null</span> || nums.length &lt; <span class="number">2</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">	Arrays.sort(nums); <span class="comment">// 因为是计数的题目，可以直接将数组重排序而不记录下标</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">0</span>, r = nums.length - <span class="number">1</span>; l &lt; r; r--) &#123;</span><br><span class="line">		<span class="keyword">while</span> (l &lt; r &amp;&amp; nums[l] + nums[r] &lt; target) &#123;</span><br><span class="line">			l++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (l &lt; r &amp;&amp; nums[l] + nums[r] == target) &#123;</span><br><span class="line">			ans++;</span><br><span class="line">			<span class="keyword">while</span> (l &lt; r &amp;&amp; nums[r] == nums[r - <span class="number">1</span>]) &#123;</span><br><span class="line">				r--; <span class="comment">// 去重</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a href="https://www.lintcode.com/problem/two-sum-closest-to-target/description" target="_blank" rel="noopener">Two Sum - Closest to target</a><br>给定整数数组num，从中找到两个数字使得他们和最接近target，返回两数和与target的差的绝对值。<br><strong>每次移动左指针或右指针的时候，都要比较两数和与target的距离。</strong></p>
+</li>
+<li><p><a href="https://www.lintcode.com/problem/two-sum-less-than-or-equal-to-target/description" target="_blank" rel="noopener">Two Sum - Less than or equal to target</a><br>给定一个整数数组，找出这个数组中有多少对的和是小于或等于目标值。返回对数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">twoSum</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(nums == <span class="keyword">null</span> || nums.length &lt; <span class="number">2</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	Arrays.sort(nums);</span><br><span class="line">	<span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">0</span>, r = nums.length - <span class="number">1</span>; l &lt; r; ) &#123;</span><br><span class="line">		<span class="keyword">if</span> (nums[l] + nums[r] &lt;= target) &#123;</span><br><span class="line">			ans += r - l; <span class="comment">// 当前l下，所有小于r的数与l的和都满足条件</span></span><br><span class="line">			l++;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			r--;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a href="https://www.lintcode.com/problem/two-sum-greater-than-target/description" target="_blank" rel="noopener">Two Sum - Greater than target</a><br>给一组整数，问能找出多少对整数，他们的和大于一个给定的目标值。<br><strong>类似于上题。</strong></p>
+</li>
+<li><p><a href="https://www.lintcode.com/problem/two-sum-difference-equals-to-target/description" target="_blank" rel="noopener">Two Sum - Difference equals to target</a><br>给定一个整数数组，找到两个数的差等于目标值。index1必须小于index2。<br><strong>和第一个Two Sum类似。<br>HashMap解法：遍历到的每一个数可能是减数也可能是被减数。<br>双指针解法：套模板就可以。</strong></p>
+</li>
+<li><p><a href="https://www.lintcode.com/problem/3sum/description" target="_blank" rel="noopener">Three Sum</a><br>给出一个有n个整数的数组S，在S中找到三个整数a, b, c，找到所有使得a + b + c = 0的三元组。<br><strong>转化为a + b = -c，变为two sum问题。注意去重。</strong><br>时间复杂度 - $O(n^2)$<br>空间复杂度 - $O(1)$</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; threeSum(<span class="keyword">int</span>[] numbers) &#123;</span><br><span class="line">		List&lt;List&lt;Integer&gt;&gt; ans = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">		<span class="keyword">if</span> (numbers == <span class="keyword">null</span> || numbers.length &lt; <span class="number">3</span>) <span class="keyword">return</span> ans;</span><br><span class="line">		Arrays.sort(numbers);</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numbers.length - <span class="number">2</span>; i++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp;&amp; numbers[i] == numbers[i - <span class="number">1</span>]) <span class="keyword">continue</span>; <span class="comment">// 去重</span></span><br><span class="line">			twoSum(numbers, -numbers[i], i + <span class="number">1</span>, ans);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> ans;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">twoSum</span><span class="params">(<span class="keyword">int</span>[] numbers, <span class="keyword">int</span> target, <span class="keyword">int</span> st, List&lt;List&lt;Integer&gt;&gt; ans)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> l = st, r = numbers.length - <span class="number">1</span>; l &lt; r; r--) &#123;</span><br><span class="line">			<span class="keyword">while</span> (l &lt; r &amp;&amp; numbers[l] + numbers[r] &lt; target) &#123;</span><br><span class="line">				l++;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (l != r &amp;&amp; numbers[l] + numbers[r] == target) &#123;</span><br><span class="line">				List&lt;Integer&gt; item = Arrays.asList(-target, numbers[l], numbers[r]);</span><br><span class="line">				ans.add(item);</span><br><span class="line">				<span class="keyword">while</span> (l &lt; r &amp;&amp; numbers[r] == numbers[r - <span class="number">1</span>]) &#123;</span><br><span class="line">					r--; <span class="comment">// 去重</span></span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="3-分区问题"><a href="#3-分区问题" class="headerlink" title="3. 分区问题"></a>3. 分区问题</h4><p>借鉴了快速排序的思想，双指针分区。</p>
+<ul>
+<li><a href="https://www.lintcode.com/problem/kth-largest-element/description" target="_blank" rel="noopener">QuickSelect</a><br>在数组中找到第 k 大的元素。(你可以交换数组中的元素的位置。)<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">kthLargestElement</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> helper(nums, <span class="number">0</span>, nums.length - <span class="number">1</span>, n);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">helper</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> l = left, r = right;</span><br><span class="line">        <span class="keyword">int</span> pivot = nums[l];</span><br><span class="line">        <span class="keyword">while</span> (l &lt;= r) &#123;</span><br><span class="line">            <span class="keyword">while</span> (l &lt;= r &amp;&amp; nums[l] &gt; pivot) &#123;</span><br><span class="line">                l++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> (l &lt;= r &amp;&amp; nums[r] &lt; pivot) &#123;</span><br><span class="line">                r--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (l &lt;= r) &#123;</span><br><span class="line">                <span class="keyword">int</span> tmp = nums[l];</span><br><span class="line">                nums[l] = nums[r];</span><br><span class="line">                nums[r] = tmp;</span><br><span class="line">                l++;</span><br><span class="line">                r--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 第k大元素在左边</span></span><br><span class="line">        <span class="keyword">if</span> (left + k - <span class="number">1</span> &lt;= r) &#123;</span><br><span class="line">            <span class="keyword">return</span> helper(nums, left, r, k);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 第k大元素在右边</span></span><br><span class="line">        <span class="keyword">if</span> (left + k - <span class="number">1</span> &gt;= l) &#123;</span><br><span class="line">            <span class="keyword">return</span> helper(nums, l, right, k - (l - left));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 第k大元素在左右指针中间</span></span><br><span class="line">        <span class="keyword">return</span> nums[r + <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/06/DataStructures/并查集-UnionFind/" rel="next" title="并查集-UnionFind">
+                <i class="fa fa-chevron-left"></i> 并查集-UnionFind
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/22/Algorithms/排序算法-Sorting Algorithm/" rel="prev" title="排序算法-Sorting Algorithm">
+                排序算法-Sorting Algorithm <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/portrait.jpeg" alt="fanshehu">
+            
+              <p class="site-author-name" itemprop="name">fanshehu</p>
+              <p class="site-description motion-element" itemprop="description">不忘初心 方得始终</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/fanshehu" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yl4427@nyu.edu" target="_blank" title="E Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.linkedin.com/in/yutian-li-750976a6/" target="_blank" title="Linkedin">
+                      
+                        <i class="fa fa-fw fa-linkedin"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#同向双指针"><span class="nav-number">1.</span> <span class="nav-text">同向双指针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-滑动窗口问题"><span class="nav-number">1.1.</span> <span class="nav-text">1. 滑动窗口问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-快慢指针"><span class="nav-number">1.2.</span> <span class="nav-text">2. 快慢指针</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相向双指针"><span class="nav-number">2.</span> <span class="nav-text">相向双指针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-判断回文串"><span class="nav-number">2.1.</span> <span class="nav-text">1. 判断回文串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-两数和问题"><span class="nav-number">2.2.</span> <span class="nav-text">2. 两数和问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-分区问题"><span class="nav-number">2.3.</span> <span class="nav-text">3. 分区问题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanshehu</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+</div>
+
+<span class="post-meta-divider">|</span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
